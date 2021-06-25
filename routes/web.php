@@ -32,6 +32,11 @@ Route::post('/trip/add', [TripController::class, 'AddTrip'])->name('store.trips'
 Route::get('trip/edit/{id}', [TripController::class, 'editTrip'])->middleware(EnsureAdmin::class);
 Route::post('trip/update/{id}', [TripController::class, 'updateTrip'])->middleware(EnsureAdmin::class);
 Route::get('trip/delete/{id}', [TripController::class, 'deleteTrip'])->middleware(EnsureAdmin::class);
+Route::get('trip/restore/{id}', [TripController::class, 'restoreTrip'])->middleware(EnsureAdmin::class);
+Route::get('trip/finalDelete/{id}', [TripController::class, 'finaldeleteTrip'])->middleware(EnsureAdmin::class);
+
+
+
 //CitiesController
 Route::get('/city/all', [CityController::class, 'AllCities'])->name('all.cities')->middleware(EnsureAdmin::class);
 Route::post('/city/add', [CityController::class, 'AddCity'])->name('store.city')->middleware(EnsureAdmin::class);
@@ -40,7 +45,7 @@ Route::post('city/update/{id}', [CityController::class, 'updateCity'])->middlewa
 Route::get('city/delete/{id}', [CityController::class , 'deleteCity'])->middleware(EnsureAdmin::class);
 //BookController
 Route::get('all', [BookController::class, 'searchTrips'])->name('search.trips');
-Route::get('trip/edit/{id}', [BookController::class, 'bookTrip']);
+Route::get('trip/editt/{id}', [BookController::class, 'bookTrip']);
 Route::get('trip/', [BookController::class, 'searchMyTrips'])->name('findmytrips');
 
 //UserController

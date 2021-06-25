@@ -20,8 +20,13 @@ class CreateTripsTable extends Migration
             $table->string('to');
             $table->dateTime('datetime');
             $table->double('cost');
+
             $table->timestamps();
         });
+
+        Schema::table('trips' , function (Blueprint $table) {
+            $table->SoftDeletes();
+    });
     }
 
     /**

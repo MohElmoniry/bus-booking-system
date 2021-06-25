@@ -15,7 +15,8 @@ class TripController extends Controller
     public function AllTrip(){
 
     $trips = Trips::paginate(5);
-    return view('admin/trips.index',compact('trips'));
+    $trashedTrip = Trips::onlyTrashed()->latest()->paginate(3);
+    return view('admin/trips.index',compact('trips', 'trashedTrip'));
 
     }
 
@@ -41,6 +42,7 @@ class TripController extends Controller
     }
 
     public function editTrip($id){
+
         $trip = Trips::find($id);
         return view('admin/trips.edit',compact('trip'));
     }
@@ -63,5 +65,19 @@ class TripController extends Controller
         $trip->delete();
 
         return Redirect()->route('all.trips')->with('success', 'Trip deleted successfully');
+    }
+
+
+    public function restoreTrip($id) {
+        Trips::withTrashed()->find($id)->restore();
+        return Redirect()->route('all.trips')->with('success', 'Trip restored successfully');
+
+    }
+
+    public function finaldeleteTrip($id){
+
+        Trips::withTrashed()->find($id)->forceDelete();
+        return Redirect()->route('all.trips')->with('success', 'Trip Permanently deleted successfully');
+
     }
 }

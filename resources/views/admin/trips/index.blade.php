@@ -159,5 +159,68 @@
                 </div>
             </div>
         </div>
+
+
+{{--        SoftDelete--}}
+
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header"> Trashed Trips </div>
+
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">From</th>
+                                    <th scope="col">To</th>
+                                    <th scope="col">DateTime</th>
+                                    <th scope="col">Cost</th>
+                                    <th scope="col">Action</th>
+
+
+
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($trashedTrip as $trip)
+                                    <tr>
+                                        <th scope="row"> {{ $trip->name }} </th>
+                                        <td>  {{ $trip->from }}</td>
+                                        <td>  {{ $trip->to }}</td>
+                                        <td>  {{ $trip->datetime }}</td>
+                                        <td>  {{ $trip->cost }}</td>
+                                        <td>
+                                            <a href="{{ url('trip/restore/'.$trip->id) }}" class="btn btn-info">Restore</a>
+                                            <a href=" {{ url('trip/finalDelete/'.$trip->id) }}" class="btn btn-danger">Permanently Delete</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                            {{ $trashedTrip->links() }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{{--        End of Softdelete--}}
+
     </div>
+
 </x-app-layout>

@@ -42,7 +42,7 @@
                                             <td>  {{ $trip->cost }}</td>
                                             <td>  {{ $trip->capacity }}</td>
                                             <td>
-                                                <a href="{{ url('trip/edit/'.$trip->id) }}" class="btn btn-info">Book</a>
+                                                <a href="{{ url('trip/editt/'.$trip->id) }}" class="btn btn-info">Book</a>
                                             </td>
                                         </tr>
                                     @endforeach

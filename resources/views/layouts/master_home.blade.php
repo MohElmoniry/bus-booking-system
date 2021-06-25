@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Company Bootstrap Template - Index</title>
+    <title>Robusta Booking System</title>
     <meta content="" name="descriptison">
     <meta content="" name="keywords">
 
@@ -55,7 +55,9 @@
         <nav class="nav-menu d-none d-lg-block">
             <ul>
                 <li class="active"><a href="/">Home</a></li>
+                @if(Auth::user())
                 <li><a href="{{route('findmytrips')}}">My trips</a></li>
+                @endif
                 @if (Route::has('login'))
                         @auth
                     <li>  <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a> </li>
@@ -63,29 +65,32 @@
                     <li>  <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a></li>
 
                         @if (Route::has('register'))
-                        <li>        <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a></li>
+                        <li>        <a href="{{ route('register') }}" class="text-sm text-gray-700 underline">Register</a></li>
                             @endif
                         @endauth
                 @endif
                 <li>
                     @if(Route::has('login'))
                         <div>
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @if( Auth::user())
                                 {{ Auth::user()->name }}
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{route('profile.show')}}">Profile</a></li>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <li>  <a href="{{ route('logout') }}"
-                                                         onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                        Logout </a>
-                                     </li>
-                                </form>
-                            </ul>
+                                        <a class="dropdown-item" href="{{route('profile.show')}}">Profile</a>
+
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                               onclick="event.preventDefault();
+                                                this.closest('form').submit();">Logout</a>
+                                        </form>
+                                    </div>
+
+                                @else
+                                    Guest
+                                @endif
+                            </button>
                         </div>
 
                         @endif
