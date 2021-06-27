@@ -17,7 +17,8 @@ class Trips extends Model
         'to',
         'datetime',
         'cost',
-        'capacity'
+        'capacity',
+        'bookingfor'
     ];
 
     public function users(){

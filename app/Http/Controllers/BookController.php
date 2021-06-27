@@ -23,6 +23,11 @@ class BookController extends Controller
                         ->whereBetween('datetime' ,[$request->datefrom , $request->dateto])
                         ->where('capacity', '>=' , $request->passengers)
                         ->get();
+                    foreach ($trips as $trip) {
+                        $trip->update([
+                            'bookingfor' => $request->passengers
+                        ]);
+                    }
                     return view('frontend/trips-index',compact('trips','cities','bus'));
                 }
                 else {
@@ -33,6 +38,12 @@ class BookController extends Controller
                         ->whereBetween('datetime', [$request->datefrom, $request->dateto])
                         ->where('capacity', '>=', $request->passengers)
                         ->get();
+                    foreach ($trips as $trip) {
+                        $trip->update([
+                            'bookingfor' => $request->passengers
+                        ]);
+                    }
+
                     return view('frontend/trips-index', compact('trips', 'cities', 'bus'));
                 }
             }
@@ -47,14 +58,16 @@ class BookController extends Controller
                 ]);
 
 
-                return Redirect()->back()->with('success', 'You booked');
+                return redirect()->route('success');
+
             }
 
             public function searchMyTrips(){
                 $user = Auth::user();
-                $trips = $user->trips()->get();
+                $trips = $user->trips()->get()->unique();
+                $tickets = $user->trips()->get()->groupBy('name');
 
-                return view('frontend/mytrips',compact('trips'));
+                return view('frontend/mytrips',compact('trips', 'tickets'));
 
             }
 }

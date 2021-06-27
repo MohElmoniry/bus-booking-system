@@ -27,8 +27,8 @@ Route::get('/', function () {
 });
 
 //TripController
-Route::get('/trip/all', [TripController::class, 'AllTrip'])->name('all.trips')->middleware(EnsureAdmin::class);
-Route::post('/trip/add', [TripController::class, 'AddTrip'])->name('store.trips')->middleware(EnsureAdmin::class);
+Route::get('admin/trip/all', [TripController::class, 'AllTrip'])->name('all.trips')->middleware(EnsureAdmin::class);
+Route::post('admin/trip/add', [TripController::class, 'AddTrip'])->name('store.trips')->middleware(EnsureAdmin::class);
 Route::get('trip/edit/{id}', [TripController::class, 'editTrip'])->middleware(EnsureAdmin::class);
 Route::post('trip/update/{id}', [TripController::class, 'updateTrip'])->middleware(EnsureAdmin::class);
 Route::get('trip/delete/{id}', [TripController::class, 'deleteTrip'])->middleware(EnsureAdmin::class);
@@ -45,8 +45,15 @@ Route::post('city/update/{id}', [CityController::class, 'updateCity'])->middlewa
 Route::get('city/delete/{id}', [CityController::class , 'deleteCity'])->middleware(EnsureAdmin::class);
 //BookController
 Route::get('all', [BookController::class, 'searchTrips'])->name('search.trips');
-Route::get('trip/editt/{id}', [BookController::class, 'bookTrip']);
+Route::get('trip/editt/{id}', [BookController::class, 'bookTrip'])->name('bookmytrip');
 Route::get('trip/', [BookController::class, 'searchMyTrips'])->name('findmytrips');
+Route::get('/success', function () {
+
+    $user = Auth::user();
+    $trips = $user->trips()->get()->unique();
+    $tickets = $user->trips()->get()->groupBy('name');
+    return view('frontend/success',compact('trips','tickets'));
+})->name('success');
 
 //UserController
 Route::get('user/update/{id}', [UserController::class, 'updateUser'])->middleware(EnsureAdmin::class);
@@ -55,7 +62,7 @@ Route::get('user/update/{id}', [UserController::class, 'updateUser'])->middlewar
 
 
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+Route::middleware(['auth:sanctum', 'verified'])->get('dashboard', function () {
 
     $users = User::all();
     return view('dashboard',compact('users'));
