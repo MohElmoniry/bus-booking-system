@@ -1,5 +1,7 @@
 
 A complete bus booking system using laravel 8 framework and php.
+A complete view/walk-through for the project is on youtube. below is the link to it 
+https://www.youtube.com/watch?v=XYDq_bLQaFc&ab
 
 below is the link to an example sql dump file for the sake of testing
 https://drive.google.com/drive/folder...
